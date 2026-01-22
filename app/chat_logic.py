@@ -3,7 +3,7 @@ from typing import List, Dict
 import streamlit as st
 from app.config import Config
 from app.booking_flow import BookingFlow
-from app.rag_pipline import RAG
+#from app.rag_pipline import RAG
 import re
 import json
 
