@@ -1,9 +1,9 @@
 from pypdf import PdfReader
-from langchain_text_splitters import RecursiveCharacterTextSplitter 
+from langchain.text_splitter import RecursiveCharacterTextSplitter  # ✅ Back to old style
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_groq import ChatGroq
-from langchain.chains.retrieval_qa.base import RetrievalQA  # ✅ FIXED
+from langchain.chains import RetrievalQA  # ✅ Back to old style
 from app.config import Config
 import streamlit as st
 from typing import List
