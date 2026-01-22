@@ -67,5 +67,5 @@ class Config:
             return False
         
         # Debug output
-        st.sidebar.success(f"✅ API Key loaded: {Config.GROQ_API_KEY[:10]}...")
+       # st.sidebar.success(f"✅ API Key loaded: {Config.GROQ_API_KEY[:10]}...")
         return True
