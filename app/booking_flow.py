@@ -69,7 +69,7 @@ class BookingFlow:
         if time_match:
             extracted["time"] = time_match.group()
         
-        # Extract booking type
+        # Extract booking type FIRST (before name) to avoid conflicts
         message_lower = user_message.lower()
         for booking_type in Config.BOOKING_TYPES:
             if booking_type.lower() in message_lower:
@@ -91,7 +91,16 @@ class BookingFlow:
             words = user_message.strip().split()
             if 1 <= len(words) <= 4 and words[0][0].isupper():
                 # Likely a name if no special keywords present
-                if not any(keyword in message_lower for keyword in ['book', 'appointment', 'email', '@', 'phone', 'time', 'date', ':', 'http']):
+                # FIXED: Also exclude booking type keywords to prevent "Dental" being treated as a name
+                booking_type_keywords = [bt.lower() for bt in Config.BOOKING_TYPES]
+                # Also check for individual words in booking types (e.g., "dental", "cardiology")
+                booking_type_words = []
+                for bt in Config.BOOKING_TYPES:
+                    booking_type_words.extend(bt.lower().split())
+                
+                exclusion_keywords = ['book', 'appointment', 'email', '@', 'phone', 'time', 'date', ':', 'http'] + booking_type_keywords + booking_type_words
+                
+                if not any(keyword in message_lower for keyword in exclusion_keywords):
                     extracted["name"] = user_message.strip().title()
         
         return extracted
